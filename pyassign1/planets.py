@@ -47,10 +47,12 @@ def draw_step(t, r, e, theta, i):
 def main():
     set_planets()
     set_positions()
+    theta = [0, 53, 53*2, 53*3, 53*4, 53*5]
     for p in range(2000):
         for i in range(6):                  #六颗行星轮流前进,轨道长轴依次转过53i#
-            theta = (p * 2)/((r[i]/150)**1.5) + 53 * i
-            draw_step(planets[i], r[i], e[i], theta, i)
+            dtheta = 2/((r[i]/150)**1.5)*(1 + e[i]*math.cos(math.radians(theta[i])))**2
+            theta[i] = theta[i] + dtheta
+            draw_step(planets[i], r[i], e[i], theta[i], i)
             
     turtle.done()
 
