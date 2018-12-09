@@ -1,4 +1,5 @@
 def judge(m, n, a, b, i):
+    """判断在i位置能否放入长为a宽为b的瓷砖"""
     if i % m + a > m or i // m + b > n:
         return False
 
@@ -11,6 +12,7 @@ def judge(m, n, a, b, i):
 
 
 def put(m, n, a, b, i=0):
+    """能否从i位置开始将剩余部分铺满，若铺满则返回答案组成的列表，否则返回空列表"""
     ans = []
     cantput = True
     if i >= m*n:
@@ -38,16 +40,39 @@ def put(m, n, a, b, i=0):
 
 
 def tile(m, n, a, b):
+    """除重版本的铺砖函数"""
     anss = list(set([tuple(ans) for ans in put(m, n, a, b)]))
     return anss
 
 
 def draw(ans, m, n):
+    """画出其中一组解"""
     import turtle
-    s0 = int(300 / max(m, n))
+    s0 = int(600 / max(m, n))
     t = turtle.Turtle()
     t.hideturtle()
     t.speed(10)
+    t.color("blue")
+    for i in range(n + 1):
+        t.pu()
+        t.goto(s0 * (-m/2), s0 * (n/2 - i))
+        t.pd()
+        t.fd(s0 * m)
+    t.rt(90)
+    for i in range(m + 1):
+        t.pu()
+        t.goto(s0 * (-m/2 + i), s0 * (n/2))
+        t.pd()
+        t.fd(s0 * n)
+    t.lt(90)
+    t.color("purple")
+    for i in range(m):
+        for j in range(n):
+            t.pu()
+            t.goto(s0 * (-m/2 +0.2 + i), s0 * (n/2 - 0.9 - j))
+            t.write(str(i + j*m), "center")
+    t.color("black")
+    t.pensize(3)
     for i in range(len(ans)):
         t.pu()
         site = ans[i][0]
@@ -74,12 +99,7 @@ def draw(ans, m, n):
     turtle.done()
 
 
-if __name__ == "__main__":
-    mn = input("请输入墙的长和宽(用空格隔开)：").split()
-    (m, n) = (int(mn[0]), int(mn[1]))
-    ab = input("请输入瓷砖的长和宽(用空格隔开)：").split()
-    (a, b) = (int(ab[0]), int(ab[1]))
-    states = [0] * m * n
+def main(m, n, a, b):
     anss = tile(m, n, a, b)
     if anss == []:
         print("不能铺满")
@@ -110,4 +130,13 @@ if __name__ == "__main__":
                 break
             else:
                 n_ans = int(input("请输入已有的序号："))
+
+
+if __name__ == "__main__":
+    mn = input("请输入墙的长和宽(用空格隔开)：").split()
+    (m, n) = (int(mn[0]), int(mn[1]))
+    ab = input("请输入瓷砖的长和宽(用空格隔开)：").split()
+    (a, b) = (int(ab[0]), int(ab[1]))
+    states = [0] * m * n
+    main(m, n, a, b)
 
