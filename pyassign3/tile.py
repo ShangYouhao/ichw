@@ -1,3 +1,11 @@
+"""tile.py: 有一面墙，规格为 长 m 宽 n 的长方形，现在要把规格为 长 a 宽 b 的长方形瓷砖铺满该墙面，输出选定总数的铺法，并将选定的铺法用turtle模块可视化。
+
+__author__ = "shangyouhao"
+__pkuid__ = "1800011714"
+__email__ = "1800011714@pku.edu.cn"
+"""
+
+
 def judge(m, n, a, b, i):
     """判断在i位置能否放入长为a宽为b的瓷砖"""
     if i % m + a > m or i // m + b > n:
