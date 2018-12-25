@@ -1,18 +1,8 @@
-
-"""wcount.py: 单词计数
-
-__author__ = "Shang Youhao"
-__pkuid__  = "1800011714"
-__email__  = "Shangyouhao@pku.edu.cn"
-"""
-
-
 import sys
 from urllib.request import urlopen
 
 
 def find_words(lines):
-    """将字符串中的单词找出并返回一个由单词组成的列表"""
     words = []
     word = []
     state = 0
@@ -29,7 +19,6 @@ def find_words(lines):
 
 
 def cot(lines):
-    """返回一个单词计数结果的字典，从单词对应到频率"""
     wds = find_words(lines)
     nums = dict()
     for wd in wds:
@@ -42,15 +31,17 @@ def cot(lines):
 
 
 def wcount(lines, topn = 10):
-    """接受一个字符串，统计其中的单词出现频率，
-并输出频率最高的n个单词及其频率，若缺省，输出最高的十个"""
     lst = sorted([(a, b) for (b, a) in cot(lines).items()])
     i = -1
     anss_lst = []
-    while i >= -topn:
-        anss_lst.append((lst[i][1], lst[i][0]))
-        i -= 1
-    anss_dct = dict(anss_lst)
+    if topn <= len(lst):
+        while i >= -topn:
+            anss_lst.append((lst[i][1], lst[i][0]))
+            i -= 1
+        anss_dct = dict(anss_lst)
+    else:
+        lst.reverse()
+        anss_dct = dict([(b, a) for (a, b) in lst])
     return anss_dct
 
 
